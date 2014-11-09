@@ -1,11 +1,13 @@
  # -*- coding: utf-8 -*-
 import os
 
+home = os.environ['HOME']
+TODO_DIR = os.path.join(home, 'Dropbox/wichtig/todo/')
+TAGNAME = '@remind'
+
 
 def tasks():
-  home = os.environ['HOME']
-  todo_dir = os.path.join(home, 'Dropbox/wichtig/todo/')
-  todos = [os.path.join(todo_dir, p) for p in os.listdir(todo_dir)]
+  todos = [os.path.join(TODO_DIR, p) for p in os.listdir(TODO_DIR)]
   todos = [t for t in todos if os.path.isfile(t)]
 
   return [t for path in todos for t in parse_file(path)]
@@ -37,7 +39,7 @@ def parse_file(path):
 def parse_category(category, lines):
   tasks = [t.strip() for t in lines.split('☐')]
   tasks = ['%s: %s' % (category, t) for t in tasks if t and '@done' not in t]
-  return tasks
+  return [t.replace(TAGNAME, '').strip() for t in tasks if TAGNAME in t]
 
 
 if __name__ == "__main__":

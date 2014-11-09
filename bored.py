@@ -1,9 +1,9 @@
 import multiprocessing.dummy
 
-from tasks import wanikani, duolingo
+from tasks import wanikani, duolingo, plaintasks
 
-sources = [wanikani, duolingo]
-p = multiprocessing.dummy.Pool(5)
+sources = [wanikani, duolingo, plaintasks]
+p = multiprocessing.dummy.Pool(len(sources))
 
 tasks = [t for ts in p.map(lambda s: s.tasks(), sources) for t in ts]
 
