@@ -6,4 +6,5 @@ class TaskSource:
 
   @abstractmethod
   def tasks(self):
+    """A list of all tasks that need to be done."""
     pass
