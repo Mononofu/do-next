@@ -1,16 +1,20 @@
 import requests
 
-url = 'https://www.duolingo.com/users/JulianSchr'
+import source
 
 
-def tasks():
-  r = requests.get(url).json()
+class Duolingo(source.TaskSource):
+  def __init__(self, user):
+    self.url = 'https://www.duolingo.com/users/%s' % user
 
-  if r['streak_extended_today']:
-    return []
-  else:
-    return ['Extend Duoling Streak']
+  def tasks(self):
+    r = requests.get(self.url).json()
+
+    if r['streak_extended_today']:
+      return []
+    else:
+      return ['Extend Duoling Streak']
 
 
 if __name__ == "__main__":
-  print tasks()
+  print Duolingo('JulianSchr').tasks()
